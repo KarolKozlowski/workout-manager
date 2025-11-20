@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: set up Docker CLI
-        run: apk add --no-cache docker-cli git nodejs
+        run: apk add --no-cache nodejs git docker-cli curl
 
       - name: checkout repository
         uses: actions/checkout@v4
