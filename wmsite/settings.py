@@ -21,14 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if not os.environ.get('DJANGO_SECRET_KEY'):
+if not os.environ.get("DJANGO_SECRET_KEY"):
     raise ValueError("The DJANGO_SECRET_KEY environment variable is not set.")
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('true', '1', 't')
+DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() in ("true", "1", "t")
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(' ') if os.environ.get('DJANGO_ALLOWED_HOSTS') else []
+ALLOWED_HOSTS = (
+    os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+    if os.environ.get("DJANGO_ALLOWED_HOSTS")
+    else []
+)
 
 
 # Application definition
@@ -52,7 +56,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "workoutmanager.urls"
+ROOT_URLCONF = "site.urls"
 
 TEMPLATES = [
     {
@@ -69,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "workoutmanager.wsgi.application"
+WSGI_APPLICATION = "site.wsgi.application"
 
 
 # Database
