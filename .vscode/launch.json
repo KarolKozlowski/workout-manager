@@ -11,8 +11,8 @@
       "program": "${workspaceFolder}/manage.py",
       "args": ["runserver"],
       "env": {
-        "SECRET_KEY": "django",
-        "DEBUG": "1"
+        "DJANGO_SECRET_KEY": "django",
+        "DJANGO_DEBUG": "1"
       },
       "django": true,
       "justMyCode": true
