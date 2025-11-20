@@ -5,6 +5,8 @@ on:
     branches: [main]
 
 env:
+  SEMAPHORE_PROJECT_ID: 2
+  SEMAPHORE_TEMPLATE_ID: 2
   REGISTRY_SERVER: git.dotnot.pl
   IMAGE_NAME: karol.kozlowski/workout-manager
 
@@ -38,3 +40,10 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ env.REGISTRY_SERVER }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy with Semaphore API
+        run: |
+          curl -X POST "${{ vars.SEMAPHORE_API_URL }}/api/project/${{ env.SEMAPHORE_PROJECT_ID }}/tasks" \
+            -H "Authorization: Bearer ${{ secrets.SEMAPHORE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{ "template_id": ${{ env.SEMAPHORE_TEMPLATE_ID }} }'
