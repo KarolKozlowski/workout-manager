@@ -20,7 +20,7 @@ is_true() {
 # perform database migrations
 python3 manage.py migrate
 
-if is_true "$DJANGO_DEBUG"; then
+if is_true "$DEBUG"; then
   echo "Running in debug mode, static files will be served by Django development server."
   python3 manage.py runserver 0.0.0.0:80
 else
