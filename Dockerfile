@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 COPY /wmsite /app/wmsite
 COPY /wmapp /app/wmapp
 COPY ./manage.py /app/manage.py
-
+COPY --chmod=755 ./entrypoint.sh /app/entrypoint.sh
 COPY ./gunicorn_conf.py /app/gunicorn_conf.py
 
-CMD ["gunicorn", "--conf", "/app/gunicorn_conf.py", "--bind", "0.0.0.0:80", "wmsite.wsgi:application"]
+CMD ["/app/entrypoint.sh"]
