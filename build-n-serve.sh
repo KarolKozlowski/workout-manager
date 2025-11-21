@@ -4,5 +4,5 @@ docker run \
   -it \
   -p 8000:80 \
   -e DJANGO_SETTINGS_ENV=dev \
-  -v $(pwd)/db/db.sqlite3:/app/db/db.sqlite3 \
+  -v $(pwd)/db:/app/db:rw \
   workout-manager
