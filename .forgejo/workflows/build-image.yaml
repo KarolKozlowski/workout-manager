@@ -11,6 +11,27 @@ env:
   IMAGE_NAME: karol.kozlowski/workout-manager
 
 jobs:
+  test:
+    runs-on: docker
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir --upgrade -r /app/requirements-dev.txt
+
+      - name: Run static code checks
+        run: |
+          black --check .
+          ruff check --diff .
+          isort --check-only --diff .
+
   build:
     runs-on: docker
     container:
@@ -18,7 +39,8 @@ jobs:
 
     steps:
       - name: Set up Docker CLI
-        run: apk add --no-cache nodejs git docker-cli curl
+        run: |
+          apk add --no-cache nodejs git docker-cli curl
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -41,6 +63,9 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY_SERVER }}/${{ env.IMAGE_NAME }}:latest
 
+  deploy:
+    runs-on: docker
+    steps:
       - name: Deploy with Semaphore API
         run: |
           curl -X POST "${{ vars.SEMAPHORE_API_URL }}/api/project/${{ env.SEMAPHORE_PROJECT_ID }}/tasks" \
