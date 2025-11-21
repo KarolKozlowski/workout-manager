@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 # Copy project sources
 COPY wmsite /app/wmsite
+COPY wmapi /app/wmapi
 COPY wmapp /app/wmapp
 COPY manage.py /app/manage.py
 COPY entrypoint.sh /app/entrypoint.sh

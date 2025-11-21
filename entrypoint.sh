@@ -18,7 +18,7 @@ is_true() {
 }
 
 # perform database migrations
-python3 manage.py migrate
+python3 manage.py migrate --run-syncdb
 
 if is_true "$DEBUG"; then
   echo "Running in debug mode, static files will be served by Django development server."
