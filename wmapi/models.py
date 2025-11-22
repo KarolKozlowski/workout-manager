@@ -17,7 +17,7 @@ class Workout(models.Model):
     start_datetime = models.DateTimeField(null=True, blank=True)
     end_datetime = models.DateTimeField(null=True, blank=True)
 
-    workout_parts = models.ManyToManyField("wmapi.WorkoutPart", blank=True)
+    workout_days = models.ManyToManyField("wmapi.WorkoutDay", blank=True)
 
     notes = models.TextField(blank=True)
 
@@ -33,6 +33,36 @@ class Workout(models.Model):
 
     def __str__(self) -> str:  # pragma: no cover - trivial
         return self.name
+
+
+class WorkoutDay(models.Model):
+    """Lookup model for exercise equipments."""
+
+    day_of_week = models.CharField(
+        max_length=10,
+        choices=[
+            (0, _("Monday")),
+            (1, _("Tuesday")),
+            (2, _("Wednesday")),
+            (3, _("Thursday")),
+            (4, _("Friday")),
+            (5, _("Saturday")),
+            (6, _("Sunday")),
+        ],
+        unique=True,
+    )
+
+    workout_parts = models.ManyToManyField("wmapi.WorkoutPart", blank=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        app_label = "wmapi"
+        ordering = ["day_of_week"]
+
+    def __str__(self) -> str:  # pragma: no cover - trivial
+        return self.day_of_week
 
 
 class WorkoutPart(models.Model):

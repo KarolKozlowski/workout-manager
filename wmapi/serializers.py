@@ -8,6 +8,7 @@ from wmapi.models import (
     Muscle,
     Set,
     Workout,
+    WorkoutDay,
     WorkoutPart,
 )
 
@@ -22,8 +23,21 @@ class WorkoutSerializer(serializers.ModelSerializer):
             "duration_minutes",
             "start_datetime",
             "end_datetime",
-            "workout_parts",
+            "workout_days",
             "notes",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class WorkoutDaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkoutDay
+        fields = [
+            "id",
+            "day_of_week",
+            "workout_parts",
             "created_at",
             "updated_at",
         ]

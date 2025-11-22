@@ -23,49 +23,58 @@
       | Ended: {% if workout.end_datetime %}{{ workout.end_datetime }}{% else %}—{% endif %}
     </p>
 
-    <h2>Parts</h2>
-    {% if workout.workout_parts.all %}
-      {% for part in workout.workout_parts.all %}
+    <h2>Days & Parts</h2>
+    {% if workout.workout_days.all %}
+      {% for day in workout.workout_days.all %}
         <div class="part">
-          <h3>{{ part.type }}</h3>
-          {% if part.notes %}
-            <p class="meta">Notes: {{ part.notes }}</p>
+          <h3>Day: {{ day.day_of_week }}</h3>
+          {% if day.workout_parts.all %}
+            {% for part in day.workout_parts.all %}
+              <div class="part">
+                <h4>{{ part.type }}</h4>
+                {% if part.notes %}
+                  <p class="meta">Notes: {{ part.notes }}</p>
+                {% endif %}
+
+                <div class="exercises">
+                  <h5>Exercises</h5>
+                  {% if part.exercises.all %}
+                    <ul>
+                      {% for instance in part.exercises.all %}
+                        <li class="exercise">
+                          <strong><a href="{% url 'wmapp:exercise_detail' instance.exercise_id.pk %}">{{ instance.exercise_id.name }}</a></strong>
+                          {% if instance.notes %}<div class="meta">Instance notes: {{ instance.notes }}</div>{% endif %}
+
+                          {% if instance.sets.all %}
+                            <div class="sets">
+                              <h6>Sets</h6>
+                              <ol>
+                                {% for s in instance.sets.all %}
+                                  <li class="set">Reps: {% if s.repetitions %}{{ s.repetitions }}{% else %}—{% endif %}; Weight: {% if s.weight %}{{ s.weight }} kg{% else %}—{% endif %}; Rest: {% if s.rest_seconds %}{{ s.rest_seconds }}s{% else %}—{% endif %}
+                                    {% if s.notes %}<div class="meta">{{ s.notes }}</div>{% endif %}
+                                  </li>
+                                {% endfor %}
+                              </ol>
+                            </div>
+                          {% else %}
+                            <div class="meta">No sets recorded.</div>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% else %}
+                    <p class="meta">No exercises for this part.</p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="meta">No parts defined for this day.</p>
           {% endif %}
-
-          <div class="exercises">
-            <h4>Exercises</h4>
-            {% if part.exercises.all %}
-              <ul>
-                {% for instance in part.exercises.all %}
-                  <li class="exercise">
-                    <strong><a href="{% url 'wmapp:exercise_detail' instance.exercise_id.pk %}">{{ instance.exercise_id.name }}</a></strong>
-                    {% if instance.notes %}<div class="meta">Instance notes: {{ instance.notes }}</div>{% endif %}
-
-                    {% if instance.sets.all %}
-                      <div class="sets">
-                        <h5>Sets</h5>
-                        <ol>
-                          {% for s in instance.sets.all %}
-                            <li class="set">Reps: {% if s.repetitions %}{{ s.repetitions }}{% else %}—{% endif %}; Weight: {% if s.weight %}{{ s.weight }} kg{% else %}—{% endif %}; Rest: {% if s.rest_seconds %}{{ s.rest_seconds }}s{% else %}—{% endif %}
-                              {% if s.notes %}<div class="meta">{{ s.notes }}</div>{% endif %}
-                            </li>
-                          {% endfor %}
-                        </ol>
-                      </div>
-                    {% else %}
-                      <div class="meta">No sets recorded.</div>
-                    {% endif %}
-                  </li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p class="meta">No exercises for this part.</p>
-            {% endif %}
-          </div>
         </div>
       {% endfor %}
     {% else %}
-      <p class="meta">No parts defined for this workout.</p>
+      <p class="meta">No days defined for this workout.</p>
     {% endif %}
 
     {% if workout.notes %}

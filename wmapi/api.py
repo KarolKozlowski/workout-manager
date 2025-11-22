@@ -8,6 +8,7 @@ from wmapi.models import (
     Muscle,
     Set,
     Workout,
+    WorkoutDay,
     WorkoutPart,
 )
 
@@ -18,6 +19,7 @@ from .serializers import (
     ExerciseSerializer,
     MuscleSerializer,
     SetSerializer,
+    WorkoutDaySerializer,
     WorkoutPartSerializer,
     WorkoutSerializer,
 )
@@ -32,6 +34,12 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 class WorkoutPartViewSet(viewsets.ModelViewSet):
     queryset = WorkoutPart.objects.all()
     serializer_class = WorkoutPartSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class WorkoutDayViewSet(viewsets.ModelViewSet):
+    queryset = WorkoutDay.objects.all()
+    serializer_class = WorkoutDaySerializer
     permission_classes = [permissions.AllowAny]
 
 

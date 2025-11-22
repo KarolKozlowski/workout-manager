@@ -3,7 +3,14 @@ from pathlib import Path
 
 from django.core.management.base import BaseCommand
 
-from wmapi.models import Exercise, ExerciseInstance, Set, Workout, WorkoutPart
+from wmapi.models import (
+    Exercise,
+    ExerciseInstance,
+    Set,
+    Workout,
+    WorkoutDay,
+    WorkoutPart,
+)
 
 
 class Command(BaseCommand):
@@ -65,46 +72,57 @@ class Command(BaseCommand):
                 obj.end_datetime = item.get("end_datetime")
                 obj.notes = item.get("notes")
 
-                for workout_parts in item.get("workout_parts", []):
-                    workout_parts_obj, _ = WorkoutPart.objects.update_or_create(
-                        id=workout_parts.get("id")
+                for workout_days in item.get("workout_days", []):
+                    workout_days_obj, _ = WorkoutDay.objects.update_or_create(
+                        id=workout_days.get("id")
                     )
-                    workout_parts_obj.type = workout_parts.get("type")
-                    workout_parts_obj.notes = workout_parts.get("notes")
-                    print("---")
-                    print("WP  ", workout_parts)
+                    workout_days_obj.day_of_week = workout_days.get("day_of_week")
 
-                    for exercises in workout_parts.get("exercises", []):
-                        defaults = {
-                            "exercise_id": Exercise.objects.get(
-                                name=exercises.get("exercise_id")
-                            ),
-                            "notes": exercises.get("notes"),
-                        }
-                        exercise_obj, _ = ExerciseInstance.objects.update_or_create(
-                            id=exercises.get("id"), defaults=defaults
+                    for workout_parts in workout_days.get("workout_parts", []):
+                        workout_parts_obj, _ = WorkoutPart.objects.update_or_create(
+                            id=workout_parts.get("id")
                         )
+                        workout_parts_obj.type = workout_parts.get("type")
+                        workout_parts_obj.notes = workout_parts.get("notes")
+                        print("---")
+                        print("WP  ", workout_parts)
 
-                        print("EX    ", exercises)
-                        print("EX obj   ", exercise_obj)
-
-                        for sets in exercises.get("sets", []):
-                            print("SET     ", sets)
-                            set_obj, was_created = Set.objects.update_or_create(
-                                id=sets.get("id")
+                        for exercises in workout_parts.get("exercises", []):
+                            defaults = {
+                                "exercise_id": Exercise.objects.get(
+                                    name=exercises.get("exercise_id")
+                                ),
+                                "notes": exercises.get("notes"),
+                            }
+                            exercise_obj, _ = ExerciseInstance.objects.update_or_create(
+                                id=exercises.get("id"), defaults=defaults
                             )
-                            set_obj.repetitions = sets.get("repetitions")
-                            set_obj.weight = sets.get("weight")
-                            set_obj.rest_seconds = sets.get("rest_seconds")
-                            set_obj.notes = sets.get("notes")
-                            exercise_obj.sets.add(set_obj)
-                            set_obj.save()
 
-                        exercise_obj.save()
-                        workout_parts_obj.exercises.add(exercise_obj)
-                    workout_parts_obj.save()
+                            print("EX    ", exercises)
+                            print("EX obj   ", exercise_obj)
 
-                    obj.workout_parts.add(workout_parts_obj)
+                            for sets in exercises.get("sets", []):
+                                print("SET     ", sets)
+                                set_obj, was_created = Set.objects.update_or_create(
+                                    id=sets.get("id")
+                                )
+                                set_obj.repetitions = sets.get("repetitions")
+                                set_obj.weight = sets.get("weight")
+                                set_obj.rest_seconds = sets.get("rest_seconds")
+                                set_obj.notes = sets.get("notes")
+                                exercise_obj.sets.add(set_obj)
+                                set_obj.save()
+
+                            exercise_obj.save()
+                            workout_parts_obj.exercises.add(exercise_obj)
+                        workout_parts_obj.save()
+                        workout_days_obj.workout_parts.add(workout_parts_obj)
+
+                    obj.workout_days.add(workout_days_obj)
+
+                    workout_days_obj.save()
+
+                    print("WD  ", workout_days)
 
                     print("---")
 

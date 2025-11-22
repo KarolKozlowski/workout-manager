@@ -7,39 +7,46 @@
         "start_datetime": "2024-07-01T18:00:00Z",
         "end_datetime": "2024-07-01T18:45:00Z",
         "notes": "Pamiętaj o odpowiednim nawodnieniu podczas treningu i wykonuj ćwiczenia w kontrolowany sposób, aby uniknąć kontuzji.",
-        "workout_parts": [
+        "workout_days": [
             {
-                "id": 1,
-                "type": "STRENGTH",
-                "notes": "Część siłowa treningu skupiająca się na głównych grupach mięśniowych.",
-                "exercises": [
+                "day_of_week": "MONDAY",
+                "workout_parts": [
                     {
                         "id": 1,
-                        "exercise_id": "Wyciskanie sztangi na ławce poziomej",
-                        "notes": "Skup się na technice i kontroli ruchu.",
-                        "sets": [
+                        "type": "STRENGTH",
+                        "notes": "Część siłowa treningu skupiająca się na głównych grupach mięśniowych.",
+                        "exercises": [
                             {
                                 "id": 1,
-                                "repetitions": 50,
-                                "weight": 100,
-                                "rest_seconds": 30
-                            },
-                            {
-                                "id": 2,
-                                "repetitions": 50,
-                                "weight": 100,
-                                "rest_seconds": 30
-                            },
-                            {
-                                "id": 3,
-                                "repetitions": 50,
-                                "weight": 100,
-                                "rest_seconds": 30
+                                "exercise_id": "Wyciskanie sztangi na ławce poziomej",
+                                "notes": "Skup się na technice i kontroli ruchu.",
+                                "sets": [
+                                    {
+                                        "id": 1,
+                                        "repetitions": 50,
+                                        "weight": 100,
+                                        "rest_seconds": 30
+                                    },
+                                    {
+                                        "id": 2,
+                                        "repetitions": 50,
+                                        "weight": 100,
+                                        "rest_seconds": 30
+                                    },
+                                    {
+                                        "id": 3,
+                                        "repetitions": 50,
+                                        "weight": 100,
+                                        "rest_seconds": 30
+                                    }
+                                ]
                             }
                         ]
                     }
                 ]
+
             }
+
         ]
     }
 ]

@@ -19,10 +19,11 @@ def workout_detail(request, pk):
     The view prefetches related objects for reasonable performance.
     """
     qs = Workout.objects.prefetch_related(
-        "workout_parts",
-        "workout_parts__exercises",
-        "workout_parts__exercises__exercise_id",
-        "workout_parts__exercises__sets",
+        "workout_days",
+        "workout_days__workout_parts",
+        "workout_days__workout_parts__exercises",
+        "workout_days__workout_parts__exercises__exercise_id",
+        "workout_days__workout_parts__exercises__sets",
     )
     workout = get_object_or_404(qs, pk=pk)
 
@@ -32,9 +33,10 @@ def workout_detail(request, pk):
 def workouts_list(request):
     """Render a page listing all Workouts with links to details."""
     qs = Workout.objects.prefetch_related(
-        "workout_parts",
-        "workout_parts__exercises",
-        "workout_parts__exercises__exercise_id",
+        "workout_days",
+        "workout_days__workout_parts",
+        "workout_days__workout_parts__exercises",
+        "workout_days__workout_parts__exercises__exercise_id",
     )
     workouts = qs.all()
 
