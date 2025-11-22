@@ -2,7 +2,7 @@ name: Docker Build
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
 env:
   SEMAPHORE_PROJECT_ID: 2
