@@ -105,6 +105,9 @@ class Command(BaseCommand):
                 obj.image_url = item.get("imageUrl") or item.get("image_url")
 
                 obj.video_url = item.get("videoUrl") or item.get("video_url")
+                obj.external_link = item.get("externalLink") or item.get(
+                    "external_link"
+                )
                 obj.overview = item.get("overview")
                 obj.keywords = item.get("keywords") or []
                 obj.exercise_tips = item.get("exerciseTips") or item.get(

@@ -81,6 +81,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
             "name",
             "image_url",
             "video_url",
+            "external_link",
             "overview",
             "keywords",
             "exercise_tips",

@@ -112,6 +112,8 @@ class Exercise(models.Model):
     image_url = models.URLField(blank=True, null=True)
     video_url = models.URLField(blank=True, null=True)
 
+    external_link = models.URLField(blank=True, null=True)
+
     overview = models.TextField(blank=True, null=True)
     keywords = models.JSONField(default=list, blank=True)
     exercise_tips = models.JSONField(default=list, blank=True)
