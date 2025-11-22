@@ -1,14 +1,50 @@
 from rest_framework import permissions, viewsets
 
-from wmapi.models import BodyPart, Equipment, Exercise, Muscle, Workout
+from wmapi.models import (
+    BodyPart,
+    Equipment,
+    Exercise,
+    ExerciseInstance,
+    Muscle,
+    Set,
+    Workout,
+    WorkoutPart,
+)
 
 from .serializers import (
     BodyPartSerializer,
     EquipmentSerializer,
+    ExerciseInstanceSerializer,
     ExerciseSerializer,
     MuscleSerializer,
+    SetSerializer,
+    WorkoutPartSerializer,
     WorkoutSerializer,
 )
+
+
+class WorkoutViewSet(viewsets.ModelViewSet):
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class WorkoutPartViewSet(viewsets.ModelViewSet):
+    queryset = WorkoutPart.objects.all()
+    serializer_class = WorkoutPartSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class ExerciseInstanceViewSet(viewsets.ModelViewSet):
+    queryset = ExerciseInstance.objects.all()
+    serializer_class = ExerciseInstanceSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class SetViewSet(viewsets.ModelViewSet):
+    queryset = Set.objects.all()
+    serializer_class = SetSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class ExerciseViewSet(viewsets.ModelViewSet):
@@ -32,10 +68,4 @@ class MuscleViewSet(viewsets.ModelViewSet):
 class EquipmentViewSet(viewsets.ModelViewSet):
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
-    permission_classes = [permissions.AllowAny]
-
-
-class WorkoutViewSet(viewsets.ModelViewSet):
-    queryset = Workout.objects.all()
-    serializer_class = WorkoutSerializer
     permission_classes = [permissions.AllowAny]

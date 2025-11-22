@@ -1,6 +1,76 @@
 from rest_framework import serializers
 
-from wmapi.models import BodyPart, Equipment, Exercise, Muscle, Workout
+from wmapi.models import (
+    BodyPart,
+    Equipment,
+    Exercise,
+    ExerciseInstance,
+    Muscle,
+    Set,
+    Workout,
+    WorkoutPart,
+)
+
+
+class WorkoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workout
+        fields = [
+            "id",
+            "name",
+            "description",
+            "duration_minutes",
+            "start_datetime",
+            "end_datetime",
+            "workout_parts",
+            "notes",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class WorkoutPartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WorkoutPart
+        fields = [
+            "id",
+            "type",
+            "exercises",
+            "notes",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class ExerciseInstanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExerciseInstance
+        fields = [
+            "id",
+            "exercise_id",
+            "sets",
+            "notes",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class SetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Set
+        fields = [
+            "id",
+            "repetitions",
+            "weight",
+            "rest_seconds",
+            "notes",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
 
 
 class ExerciseSerializer(serializers.ModelSerializer):
@@ -58,21 +128,6 @@ class EquipmentSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
-            "created_at",
-            "updated_at",
-        ]
-        read_only_fields = ["id", "created_at", "updated_at"]
-
-
-class WorkoutSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Workout
-        fields = [
-            "id",
-            "name",
-            "description",
-            "duration_minutes",
-            "performed_at",
             "created_at",
             "updated_at",
         ]
