@@ -1,13 +1,14 @@
 [
   {
     "name": "Wyciskanie sztangi na ławce poziomej",
-    "imageUrl": "Barbell-Bench-Press_Chest.png",
+    "imageUrl": "",
     "equipments": ["sztanga prosta", "ławka pozioma"],
     "bodyParts": ["klatka piersiowa", "ramiona", "barki"],
     "exerciseType": "weight_reps",
     "targetMuscles": ["Pectoralis Major Clavicular Head", "Pectoralis Major Sternal Head"],
     "secondaryMuscles": ["Deltoid Anterior", "Pectoralis Major Clavicular Head", "Triceps Brachii"],
-    "videoUrl": "Barbell-Bench-Press_Chest_.mp4",
+    "videoUrl": "",
+    "externalLink": "https://www.fabrykasily.pl/cwiczenia/na-klatke-piersiowa/wyciskanie-sztangi-na-lawce-plaskiej-barbell",
     "keywords": [
       "Chest workout with barbell",
       "Barbell bench press exercise",

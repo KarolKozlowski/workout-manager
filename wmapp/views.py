@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
 
-from wmapi.models import Workout
+from wmapi.models import Exercise, Workout
 
 
 class IndexView(TemplateView):
@@ -39,3 +39,20 @@ def workouts_list(request):
     workouts = qs.all()
 
     return render(request, "wmapp/workouts_list.html", {"workouts": workouts})
+
+
+def exercise_detail(request, pk):
+    """Render details for a single Exercise (lookup from `wmapi.Exercise`).
+
+    Prefetch related lookup tables and instances for display.
+    """
+    qs = Exercise.objects.prefetch_related(
+        "target_muscles",
+        "secondary_muscles",
+        "body_parts",
+        "equipments",
+        "instances__sets",
+    )
+    exercise = get_object_or_404(qs, pk=pk)
+
+    return render(request, "wmapp/exercise_detail.html", {"exercise": exercise})

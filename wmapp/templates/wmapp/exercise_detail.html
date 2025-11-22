@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Exercise: {{ exercise.name }}</title>
+    <style>
+      body { font-family: sans-serif; margin: 2rem; }
+      .meta { color: #666; font-size: 0.9rem; }
+      .section { margin-bottom: 1rem; }
+      img.exercise-img { max-width: 320px; display: block; margin-bottom: 0.5rem; }
+    </style>
+  </head>
+  <body>
+    <h1>{{ exercise.name }}</h1>
+
+    {% if exercise.image_url %}
+      <img class="exercise-img" src="{{ exercise.image_url }}" alt="{{ exercise.name }} image" />
+    {% endif %}
+
+    {% if exercise.video_url %}
+      <p><a href="{{ exercise.video_url }}" target="_blank">Watch video</a></p>
+    {% endif %}
+
+    {% if exercise.external_link %}
+      <p><a href="{{ exercise.external_link }}" target="_blank">External link</a></p>
+    {% endif %}
+
+    {% if exercise.overview %}
+      <div class="section">{{ exercise.overview }}</div>
+    {% endif %}
+
+    <div class="section">
+      <strong>Target muscles:</strong>
+      {% if exercise.target_muscles.all %}
+        {{ exercise.target_muscles.all|join:", " }}
+      {% else %}
+        <span class="meta">—</span>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <strong>Secondary muscles:</strong>
+      {% if exercise.secondary_muscles.all %}
+        {{ exercise.secondary_muscles.all|join:", " }}
+      {% else %}
+        <span class="meta">—</span>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <strong>Body parts:</strong>
+      {% if exercise.body_parts.all %}
+        {{ exercise.body_parts.all|join:", " }}
+      {% else %}
+        <span class="meta">—</span>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <strong>Equipments:</strong>
+      {% if exercise.equipments.all %}
+        {{ exercise.equipments.all|join:", " }}
+      {% else %}
+        <span class="meta">—</span>
+      {% endif %}
+    </div>
+
+    {% if exercise.instructions %}
+      <div class="section">
+        <strong>Instructions</strong>
+        <ol>
+          {% for step in exercise.instructions %}
+            <li>{{ step }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    {% endif %}
+
+    {% if exercise.exercise_tips %}
+      <div class="section">
+        <strong>Tips</strong>
+        <ul>
+          {% for tip in exercise.exercise_tips %}
+            <li>{{ tip }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if exercise.variations %}
+      <div class="section">
+        <strong>Variations</strong>
+        <div>{{ exercise.variations }}</div>
+      </div>
+    {% endif %}
+
+    <div class="section">
+      <h3>Instances in workouts</h3>
+      {% if exercise.instances.all %}
+        <ul>
+          {% for inst in exercise.instances.all %}
+            <li>
+              Instance ID: {{ inst.pk }}
+              {% if inst.notes %}<div class="meta">Notes: {{ inst.notes }}</div>{% endif %}
+              {% if inst.sets.all %}
+                <div class="meta">Sets:
+                  <ul>
+                    {% for s in inst.sets.all %}
+                      <li>Reps: {% if s.repetitions %}{{ s.repetitions }}{% else %}—{% endif %}; Weight: {% if s.weight %}{{ s.weight }} kg{% else %}—{% endif %}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="meta">No instances recorded.</p>
+      {% endif %}
+    </div>
+
+    <p><a href="{% url 'wmapp:workouts_list' %}">Back to workouts</a> | <a href="{% url 'wmapp:index' %}">Home</a></p>
+  </body>
+</html>
