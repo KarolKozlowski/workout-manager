@@ -27,6 +27,9 @@ class Workout(models.Model):
         return self.name
 
 
+# --- the below models are compatible with exercisedb API --- #
+
+
 class Exercise(models.Model):
     """A simple Workout model for CRUD via the API.
 
@@ -87,8 +90,8 @@ class BodyPart(models.Model):
         return self.name
 
 
-class Equipment(models.Model):
-    """Lookup model for exercise equipments."""
+class Muscle(models.Model):
+    """Lookup model for muscles/targets used in exercises."""
 
     name = models.CharField(max_length=200, unique=True)
 
@@ -103,8 +106,8 @@ class Equipment(models.Model):
         return self.name
 
 
-class Muscle(models.Model):
-    """Lookup model for muscles/targets used in exercises."""
+class Equipment(models.Model):
+    """Lookup model for exercise equipments."""
 
     name = models.CharField(max_length=200, unique=True)
 
