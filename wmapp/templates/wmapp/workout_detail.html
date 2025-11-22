@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Workout: {{ workout.name }}</title>
+    <style>
+      body { font-family: sans-serif; margin: 2rem; }
+      .part { border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; }
+      .exercise { margin-left: 1rem; padding: 0.5rem 0; }
+      .set { margin-left: 2rem; color: #333; }
+      .meta { color: #666; font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <h1>{{ workout.name }}</h1>
+
+    {% if workout.description %}
+      <p>{{ workout.description }}</p>
+    {% endif %}
+
+    <p class="meta">Duration: {% if workout.duration_minutes %}{{ workout.duration_minutes }} minutes{% else %}—{% endif %}
+      | Started: {% if workout.start_datetime %}{{ workout.start_datetime }}{% else %}—{% endif %}
+      | Ended: {% if workout.end_datetime %}{{ workout.end_datetime }}{% else %}—{% endif %}
+    </p>
+
+    <h2>Parts</h2>
+    {% if workout.workout_parts.all %}
+      {% for part in workout.workout_parts.all %}
+        <div class="part">
+          <h3>{{ part.type }}</h3>
+          {% if part.notes %}
+            <p class="meta">Notes: {{ part.notes }}</p>
+          {% endif %}
+
+          <div class="exercises">
+            <h4>Exercises</h4>
+            {% if part.exercises.all %}
+              <ul>
+                {% for instance in part.exercises.all %}
+                  <li class="exercise">
+                    <strong>{{ instance.exercise_id.name }}</strong>
+                    {% if instance.notes %}<div class="meta">Instance notes: {{ instance.notes }}</div>{% endif %}
+
+                    {% if instance.sets.all %}
+                      <div class="sets">
+                        <h5>Sets</h5>
+                        <ol>
+                          {% for s in instance.sets.all %}
+                            <li class="set">Reps: {% if s.repetitions %}{{ s.repetitions }}{% else %}—{% endif %}; Weight: {% if s.weight %}{{ s.weight }} kg{% else %}—{% endif %}; Rest: {% if s.rest_seconds %}{{ s.rest_seconds }}s{% else %}—{% endif %}
+                              {% if s.notes %}<div class="meta">{{ s.notes }}</div>{% endif %}
+                            </li>
+                          {% endfor %}
+                        </ol>
+                      </div>
+                    {% else %}
+                      <div class="meta">No sets recorded.</div>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="meta">No exercises for this part.</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="meta">No parts defined for this workout.</p>
+    {% endif %}
+
+    {% if workout.notes %}
+      <h3>Notes</h3>
+      <p>{{ workout.notes }}</p>
+    {% endif %}
+  </body>
+</html>
