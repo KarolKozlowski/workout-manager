@@ -38,7 +38,7 @@
               <ul>
                 {% for instance in part.exercises.all %}
                   <li class="exercise">
-                    <strong>{{ instance.exercise_id.name }}</strong>
+                    <strong><a href="{% url 'wmapp:exercise_detail' instance.exercise_id.pk %}">{{ instance.exercise_id.name }}</a></strong>
                     {% if instance.notes %}<div class="meta">Instance notes: {{ instance.notes }}</div>{% endif %}
 
                     {% if instance.sets.all %}
