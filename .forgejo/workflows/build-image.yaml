@@ -13,14 +13,17 @@ env:
 jobs:
   test:
     runs-on: docker
+    container:
+      image: python:3-alpine
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
+    steps:
+      - name: Set up Docker CLI
+        run: |
+          apk add --no-cache nodejs git
 
       - name: Install dependencies
         run: |
