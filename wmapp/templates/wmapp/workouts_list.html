@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Workouts</title>
+    <style>
+      body { font-family: sans-serif; margin: 2rem; }
+      .workout { border-bottom: 1px solid #eee; padding: 0.5rem 0; }
+      .meta { color: #666; font-size: 0.9rem; }
+      a { color: #0366d6; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <h1>Workouts</h1>
+
+    {% if workouts %}
+      <ul>
+        {% for w in workouts %}
+          <li class="workout">
+            <a href="{% url 'wmapp:workout_detail' w.pk %}"><strong>{{ w.name }}</strong></a>
+            <div class="meta">{% if w.description %}{{ w.description }} | {% endif %} Duration: {% if w.duration_minutes %}{{ w.duration_minutes }} min{% else %}—{% endif %}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="meta">No workouts available.</p>
+    {% endif %}
+
+    <p><a href="{% url 'wmapp:index' %}">Back to index</a></p>
+  </body>
+</html>

@@ -27,3 +27,15 @@ def workout_detail(request, pk):
     workout = get_object_or_404(qs, pk=pk)
 
     return render(request, "wmapp/workout_detail.html", {"workout": workout})
+
+
+def workouts_list(request):
+    """Render a page listing all Workouts with links to details."""
+    qs = Workout.objects.prefetch_related(
+        "workout_parts",
+        "workout_parts__exercises",
+        "workout_parts__exercises__exercise_id",
+    )
+    workouts = qs.all()
+
+    return render(request, "wmapp/workouts_list.html", {"workouts": workouts})
