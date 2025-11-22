@@ -30,9 +30,9 @@ jobs:
 
       - name: Run static code checks
         run: |
-          black --check .
+          black --check --diff .
           ruff check --diff .
-          isort --check-only --diff .
+          isort --profile black --check-only --diff .
 
   build:
     runs-on: docker
