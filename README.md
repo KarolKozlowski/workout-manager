@@ -135,6 +135,10 @@ workout-manager/
 └── manage.py        # Django management script
 ```
 
+## Contributing
+
+See [TODO.md](TODO.md) for planned features and improvements.
+
 ## License
 
 [Add license information]
