@@ -16,7 +16,11 @@ DEBUG = False
 # SECRET_KEY should be provided via env. dev/prod modules handle generation/enforcement.
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+# Load ALLOWED_HOSTS from environment variable
+if os.environ.get("DJANGO_ALLOWED_HOSTS"):
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+else:
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 # Application definition
 
