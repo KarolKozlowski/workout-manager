@@ -18,7 +18,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # Load ALLOWED_HOSTS from environment variable
 if os.environ.get("DJANGO_ALLOWED_HOSTS"):
-    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+    ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
 else:
     ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
